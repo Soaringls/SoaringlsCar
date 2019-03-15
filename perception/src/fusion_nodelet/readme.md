@@ -1,0 +1,1 @@
+#启动nodelet管理器 roscore rosrun nodelet nodelet manager __name:=nodelet_manager #启动自己的nodelet rosrun nodelet nodelet load nodelet_tutorial_math/Plus nodelet_manager __name:=nodelet1 nodelet1/in:=foo _value:=1.1
