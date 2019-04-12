@@ -1,0 +1,4 @@
+<launch>
+<!-- type="pcl6_filter" 和CMakeLists.txt中executable的执行文件名称一致 -->
+    <node pkg="lslidar_trans" type="lslidar_trans" name="lslidar_trans"/>
+</launch>
