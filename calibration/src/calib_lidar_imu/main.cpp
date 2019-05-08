@@ -236,14 +236,14 @@ int calib_imu_lidar::calib_process(string str,Eigen::Matrix4d& T_total,pcl::Poin
 
 }
 
-Eigen::Vector3d calib_imu_lidar::linetoplane(Eigen::Vector3d& d_line,Eigen::Vector3d& Q,Eigen::Vector3d& n_plane,double d)
+Eigen::Vector3d calib_imu_lidar::linetoplane(Eigen::Vector3d& d_line, Eigen::Vector3d& Q, Eigen::Vector3d& n_plane, double d)
 {
     Eigen::Vector3d p(0,0,0);
-    double delta=d_line.dot(n_plane);
-    double dist=n_plane.dot(Q)+d;
+    double delta=d_line.dot(n_plane); //
+    double dist=n_plane.dot(Q)+d;     //圆柱轴线上任一点到水平地面(激光雷达Z轴校准后)的距离
     if(delta !=0)
     {
-        p=Q-(dist-delta)*d_line;
+        p=Q-(dist-delta)*d_line;      //TODO
     }
     return p;
 }
@@ -435,7 +435,7 @@ Eigen::Matrix4d calib_imu_lidar::rot_mat(const Eigen::Vector3d& point, const Eig
     double b = point(1);
     double c = point(2);
 
-    Eigen::Matrix4d matrix;
+    Eigen::Matrix4d matrix;  //TODO
     matrix<<u*u + (v*v + w*w)*cos(t), u*v*(1 - cos(t)) - w*sin(t), u*w*(1 - cos(t)) + v*sin(t), (a*(v*v + w*w) - u*(b*v + c*w))*(1 - cos(t)) + (b*w - c*v)*sin(t),
             u*v*(1 - cos(t)) + w*sin(t), v*v + (u*u + w*w)*cos(t), v*w*(1 - cos(t)) - u*sin(t), (b*(u*u + w*w) - v*(a*u + c*w))*(1 - cos(t)) + (c*u - a*w)*sin(t),
             u*w*(1 - cos(t)) - v*sin(t), v*w*(1 - cos(t)) + u*sin(t), w*w + (u*u + v*v)*cos(t), (c*(u*u + v*v) - w*(a*u + b*v))*(1 - cos(t)) + (a*v - b*u)*sin(t),
@@ -523,9 +523,12 @@ int calib_imu_lidar::cal_L_2xy(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& point,dou
 
     //cout<<"聚类个数："<<cluster_indices.size()<<endl;
     for (std::vector<pcl::PointIndices>::const_iterator it = cluster_indices.begin (); it != cluster_indices.end (); ++it) {
+
         pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_cluster(new pcl::PointCloud<pcl::PointXYZRGB>);
+        
         for (std::vector<int>::const_iterator pit = it->indices.begin(); pit != it->indices.end(); ++pit)
             cloud_cluster->points.push_back(point_filter_floor->points[*pit]);
+        
         cloud_cluster->width = cloud_cluster->points.size();
         cloud_cluster->height = 1;
         cloud_cluster->is_dense = true;
@@ -568,17 +571,15 @@ int calib_imu_lidar::cal_L_2xy(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& point,dou
         if (cloud_cylinder->points.empty()) {
             std::cerr << "Can't find the cylindrical component." << std::endl;
 
-        } else {
+        } 
+        else {
             //show the clinder
-
-//            cout << "圆柱点:" << cloud_cylinder->size() << endl;
-//            cout << "聚类点:" << cloud_cluster->size() << endl;
-
+            // cout << "圆柱点:" << cloud_cylinder->size() << endl;
+            // cout << "聚类点:" << cloud_cluster->size() << endl;
             double key_num=double(cloud_cylinder->size())/double(cloud_cluster->size());//验证是否圆柱
 
             if(key_num >0.75)
             {
-
                 if(show)
                 {
                     pcl::visualization::CloudViewer viewer2("cylinder viewer");
@@ -590,8 +591,10 @@ int calib_imu_lidar::cal_L_2xy(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& point,dou
                 //计算圆柱与地面的交点
                 Eigen::Vector3d Q,d_line,n;
                 double d;
+                //coefficients_cylinder  0\1\2 圆柱轴线原点  3\4\5圆柱轴线法向量  6圆柱半径 
                 Q<<coefficients_cylinder->values[0], coefficients_cylinder->values[1],coefficients_cylinder->values[2];
                 d_line<<coefficients_cylinder->values[3], coefficients_cylinder->values[4],coefficients_cylinder->values[5];
+
                 cout<<"圆柱半径："<<coefficients_cylinder->values[6]<<endl;
 
                 n<<0,0,1;
@@ -627,7 +630,7 @@ int calib_imu_lidar::cal_L_2xy(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& point,dou
 
 }
 
-std::vector<Eigen::Vector2d> calib_imu_lidar::cal_I_2xy()
+std::vector<Eigen::Vector2d> calib_imu_lidar::cal_I_2xy() //TODO
 {
     std::vector<Eigen::Vector2d> center_I_2xy;
 

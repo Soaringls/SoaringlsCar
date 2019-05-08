@@ -10,7 +10,7 @@
     <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
   <!-- rosbag play -->
-    <!-- <node pkg="rosbag" type="play" name="fusion_bag_play" args="-l -r 2.0 $(env HOME)/data/bag/2018-12-17-15-58-31.bag" /> -->
+    <node pkg="rosbag" type="play" name="fusion_bag_play" args="-l -r 1.0 $(env HOME)/data/bag/2018-12-17-15-58-31.bag" />
   
   <!-- nodelet*************nodelet -->
 

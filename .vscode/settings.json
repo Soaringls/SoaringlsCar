@@ -2,6 +2,11 @@
     "python.pythonPath": "/usr/bin/python3",
     "files.associations": {
         "deque": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "array": "cpp",
+        "unordered_map": "cpp",
+        "initializer_list": "cpp",
+        "core": "cpp",
+        "numericaldiff": "cpp"
     }
 }
