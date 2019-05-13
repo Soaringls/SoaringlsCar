@@ -1,8 +1,0 @@
-<library path="lib/libfusion_cloud_nodelet">
-  <class name="fusion_nodelet/FusionCloudNodelet" type="fusion_nodelet::FusionCloudNodelet" base_class_type="nodelet::Nodelet" />
-</library>
-
-<library path="lib/libperception_nodelet">
-  <class name="fusion_nodelet/PerceptionNodelet" type="fusion_nodelet::PerceptionNodelet" base_class_type="nodelet::Nodelet" />
-</library>
-
